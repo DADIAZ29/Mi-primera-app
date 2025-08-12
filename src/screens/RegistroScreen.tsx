@@ -1,15 +1,11 @@
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
 import { AppTheme } from '../theme/AppTheme';
-
-
-type RootStackParamList = {
-  Inicio: undefined;
-  Registro: undefined;
-};
+import { PasswordInput } from '../components/PasswordInput';
+import { RootStackParamList } from '../navigator/StackNavigator';
+import { TextInput } from 'react-native-gesture-handler';
 
 export const RegistroScreen = () => {
   const [email, setEmail] = useState('');
@@ -17,24 +13,38 @@ export const RegistroScreen = () => {
   const [contrasena, setContrasena] = useState('');
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  
+  const handleRegister = () => {
+    console.log('Correo:', email);
+    console.log('Usuario:', usuario);
+    console.log('Contraseña:', contrasena);
+    navigation.navigate('Inicio');
+  };
+
   return (
-     <View style={AppTheme.screenContainer}>
-      <Text style={AppTheme.title}>Registrate</Text>
+    <View style={AppTheme.screenContainer}>
+      <Text style={AppTheme.title}>Regístrate</Text>
 
       <TextInput
         style={AppTheme.textInput}
-        placeholder="Correo Electrónico"/>
+        placeholder="Correo Electrónico"
+        value={email}
+        onChangeText={setEmail}
+      />
 
       <TextInput
         style={AppTheme.textInput}
-        placeholder="Usuario"/>
+        placeholder="Usuario"
+        value={usuario}
+        onChangeText={setUsuario}
+      />
 
-      <TextInput
-        style={AppTheme.textInput}
-        placeholder="Contraseña"/>
+      <PasswordInput
+        placeholder="Contraseña"
+        value={contrasena}
+        onChangeText={setContrasena}
+      />
 
-      <TouchableOpacity style={AppTheme.button}>
+      <TouchableOpacity style={AppTheme.button} onPress={handleRegister}>
         <Text style={AppTheme.buttonText}>Registrarme</Text>
       </TouchableOpacity>
 
@@ -44,8 +54,7 @@ export const RegistroScreen = () => {
         </Text>
       </TouchableOpacity>
     </View>
-
-  )
-}
+  );
+};
 
 

@@ -1,55 +1,51 @@
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
 import { AppTheme } from '../theme/AppTheme';
-
-type RootStackParamList = {
-  Inicio: undefined;
-  Registro: undefined;
-};
+import { PasswordInput } from '../components/PasswordInput';
+import { RootStackParamList } from '../navigator/StackNavigator';
+import { TextInput } from 'react-native-gesture-handler';
 
 export const InicioScreen = () => {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
+  const handleLogin = () => {
+    console.log('Usuario:', usuario);
+    console.log('Contraseña:', contrasena);
+    navigation.navigate('Productos');
+  };
+
   return (
     <View style={AppTheme.screenContainer}>
-  <Text style={AppTheme.title}> ¡Bienvenido nuevamente!</Text>
-  
-  <TextInput
-    style={AppTheme.textInput}
-    placeholder="Ingresa tu Usuario"
-    value={usuario}
-    onChangeText={setUsuario}
-  />
-  
-  <TextInput
-    style={AppTheme.textInput}
-    placeholder="Ingresa tu Contraseña"
-    value={contrasena}
-    onChangeText={setContrasena}
-    secureTextEntry
-  />
+      <Text style={AppTheme.title}>¡Bienvenido nuevamente!</Text>
 
-  <TouchableOpacity style={AppTheme.button}>
-    <Text style={AppTheme.buttonText}>Ingresar</Text>
-  </TouchableOpacity>
+      <TextInput
+        style={AppTheme.textInput}
+        placeholder="Ingresa tu Usuario"
+        value={usuario}
+        onChangeText={setUsuario}
+      />
 
-  <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
-    <Text style={AppTheme.linkingContext}>
-      ¿Aun no tienes cuenta? <Text style={AppTheme.linking}>Regístrate</Text>
-    </Text>
-  </TouchableOpacity>
-</View>
+      <PasswordInput
+        placeholder="Ingresa tu Contraseña"
+        value={contrasena}
+        onChangeText={setContrasena}
+      />
 
+      <TouchableOpacity style={AppTheme.button} onPress={handleLogin}>
+        <Text style={AppTheme.buttonText}>Ingresar</Text>
+      </TouchableOpacity>
 
+      <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
+        <Text style={AppTheme.linkingContext}>
+          ¿Aún no tienes cuenta? <Text style={AppTheme.linking}>Regístrate</Text>
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-
-
-
-  )
-}
 
